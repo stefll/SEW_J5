@@ -45,5 +45,9 @@ public class SongService {
     public void deleteSong(Long id) {
         songRepository.deleteById(id);
     }
+
+    public List<EntityModel<Song>> searchSong(String query) {
+        return songRepository.findByTitleIgnoreCaseContainingOrArtistIgnoreCaseContaining(query,query).stream().map(assembler::toModel).toList();
+    }
 }
 

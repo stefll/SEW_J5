@@ -7,6 +7,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins="*")
 @RestController
 public class SongController {
@@ -37,5 +39,10 @@ public class SongController {
     @DeleteMapping("/api/songs/{id}")
     public void delete(@PathVariable("id") long id) {
         songService.deleteSong(id);
+    }
+
+    @GetMapping("/api/songs/search")
+    public List<EntityModel<Song>> search(@RequestParam String query) {
+        return songService.searchSong(query);
     }
 }

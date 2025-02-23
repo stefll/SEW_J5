@@ -14,7 +14,7 @@ const genre = ref();
 const length = ref();
 const toast = useToast()
 
-if (id) {
+if (id.value) {
   axios.get(`http://localhost:8080/api/songs/${id.value}`).then(function (response) {
     songname.value = response.data.title;
     artist.value = response.data.artist;
