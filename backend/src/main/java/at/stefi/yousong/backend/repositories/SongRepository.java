@@ -10,6 +10,6 @@ import java.util.List;
 @CrossOrigin(origins="*")
 public interface SongRepository extends JpaRepository<Song, Long> {
 
-   List<Song> findByTitleIgnoreCaseContainingOrArtistIgnoreCaseContaining(String title, String artist);
+   List<Song> findByTitleIgnoreCaseContainingOrArtist_ArtistNameIgnoreCaseContaining(String title, String artistName);
 }
 

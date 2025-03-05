@@ -17,6 +17,8 @@ import router from './router'
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 
+import AutoComplete from 'primevue/autocomplete';
+
 
 
 const app = createApp(App)
@@ -28,5 +30,6 @@ app.use(ToastService)
 app.component('Toast', Toast)
 app.component('TabView', TabView)
 app.component('TabPanel', TabPanel)
+app.component('AutoComplete', AutoComplete)
 
 app.mount('#app')

@@ -17,12 +17,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class SongService {
-    @Autowired
-    SongRepository songRepository;
+    private final SongRepository songRepository;
 
     private final SongModelAssembler assembler;
-    @Autowired
-    private SongModelAssembler songModelAssembler;
+
 
     SongService(SongRepository repository, SongModelAssembler assembler) {
         this.songRepository = repository;
@@ -38,7 +36,7 @@ public class SongService {
         return assembler.toModel(song);
     }
     public EntityModel<Song> addSong(Song song) {
-       return songModelAssembler.toModel(songRepository.save(song));
+       return assembler.toModel(songRepository.save(song));
 
     }
 
@@ -47,7 +45,8 @@ public class SongService {
     }
 
     public List<EntityModel<Song>> searchSong(String query) {
-        return songRepository.findByTitleIgnoreCaseContainingOrArtistIgnoreCaseContaining(query,query).stream().map(assembler::toModel).toList();
+        return songRepository.findByTitleIgnoreCaseContainingOrArtist_ArtistNameIgnoreCaseContaining(query,query).stream().map(assembler::toModel).toList();
     }
+
 }
 

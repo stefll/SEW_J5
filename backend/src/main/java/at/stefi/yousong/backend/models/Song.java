@@ -1,20 +1,19 @@
 package at.stefi.yousong.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 
 @Entity
 public class Song {
 
     private @Id @GeneratedValue Long id;
     private String title;
-    private String artist;
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "artist_id")
+    private Artist artist;
     private String genre;
     private double length;
 
-    public Song(String title, String artist, String genre, double length) {
+    public Song(String title, Artist artist, String genre, double length) {
 
         this.title = title;
         this.artist = artist;
@@ -43,11 +42,11 @@ public class Song {
         this.title = title;
     }
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
