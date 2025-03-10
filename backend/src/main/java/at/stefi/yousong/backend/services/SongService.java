@@ -1,42 +1,34 @@
 package at.stefi.yousong.backend.services;
 
-import at.stefi.yousong.backend.assembler.SongModelAssembler;
-import at.stefi.yousong.backend.controllers.SongController;
 import at.stefi.yousong.backend.models.Song;
 import at.stefi.yousong.backend.repositories.SongRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Service
 public class SongService {
     private final SongRepository songRepository;
 
-    private final SongModelAssembler assembler;
 
-
-    SongService(SongRepository repository, SongModelAssembler assembler) {
+    SongService(SongRepository repository) {
         this.songRepository = repository;
-        this.assembler = assembler;
     }
-    public CollectionModel<EntityModel<Song>> getAllSongs() {
-        List<EntityModel<Song>> songs = songRepository.findAll().stream().map(assembler::toModel).toList();
-        return CollectionModel.of(songs, linkTo(methodOn(SongController.class).all()).withSelfRel());
+    public Page<Song> getAllSongs(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return songRepository.findAll(pageable);
     }
 
-    public EntityModel<Song> getSongById(Long id) {
+    public Song getSongById(Long id) {
         Song song = songRepository.findById(id).orElseThrow();
-        return assembler.toModel(song);
+        return song;
     }
-    public EntityModel<Song> addSong(Song song) {
-       return assembler.toModel(songRepository.save(song));
+    public Song addSong(Song song) {
+       return songRepository.save(song);
 
     }
 
@@ -44,8 +36,9 @@ public class SongService {
         songRepository.deleteById(id);
     }
 
-    public List<EntityModel<Song>> searchSong(String query) {
-        return songRepository.findByTitleIgnoreCaseContainingOrArtist_ArtistNameIgnoreCaseContaining(query,query).stream().map(assembler::toModel).toList();
+    public Page<Song> searchSong(String query, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size );
+        return songRepository.findByTitleIgnoreCaseContainingOrArtist_ArtistNameIgnoreCaseContaining(query,query,pageable);
     }
 
 }

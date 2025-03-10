@@ -3,6 +3,7 @@ package at.stefi.yousong.backend.controllers;
 import at.stefi.yousong.backend.models.Artist;
 import at.stefi.yousong.backend.repositories.ArtistRepository;
 import at.stefi.yousong.backend.services.ArtistService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,13 @@ public class ArtistController {
     }
 
     @GetMapping("api/artists")
-    public List<Artist> getAllArtists() {
-        return artistService.getAllArtists();
+    public Page<Artist> getAllArtists(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return artistService.getAllArtists(page, size);
+    }
+
+    @GetMapping("api/artists/search")
+    public List<Artist> searchArtists(@RequestParam("query") String query) {
+        return artistRepository.findByArtistNameIgnoreCaseContaining(query);
     }
 
     @GetMapping("api/artists/{id}")

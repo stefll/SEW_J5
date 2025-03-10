@@ -11,16 +11,22 @@ const id = ref(Number(route.params.id))
 
 const songname = ref();
 const artist = ref();
+const artists = ref([]);
 const genre = ref();
 const length = ref();
 const toast = useToast()
 
-const value = ref("");
-const items = ref([]);
-
 const search = (event) => {
-  const artists = []
-  items.value = artists.map((artist) => artist.artistName);
+  //const artists = []
+  axios.get(`http://localhost:8080/api/artists/search?query=${event.query}`).then(function (response) {
+    artists.value = response.data.map((artist) => artist.artistName);
+
+    /*response.data.forEach((artist) => {
+      artists.push(artist.artistName)
+    })*/
+  })
+  //artists.value = artists.map((artist) => artist.artistName);
+
 }
 
 if (id.value) {
@@ -79,15 +85,10 @@ async function save() {
           <label class="block text-sm font-medium mb-2" for="artist">
             Artist
           </label>
-          <!--
-          <input v-model="artist"
-                 class="shadow appearance-none border border-neutral-600  rounded w-full py-2 px-3 text-neutral-100 bg-neutral-700 leading-tight focus:outline-none focus:border-green-600 focus:shadow-outline"
-                 id="artist" type="text" placeholder="Artist">-->
-          <AutoComplete class="w-full" v-model="artist" :suggestions="artists" @complete="search" placeholder="Artist"
+          <AutoComplete class="w-full text-neutral-50" v-model="artist" :suggestions="artists" @complete="search" placeholder="Artist"
                         complete-on-focus
-                        input-class="shadow appearance-none border border-neutral-600  rounded w-full py-2 px-3 text-neutral-100 bg-neutral-700 leading-tight focus:outline-none focus:border-green-600 focus:shadow-outline"/>
-
-
+                        input-class="shadow appearance-none border border-neutral-600 rounded w-full py-2 px-3 text-neutral-50 bg-neutral-700 leading-tight focus:outline-none focus:border-green-600 focus:shadow-outline"
+          />
         </div>
         <div class="mb-4">
           <label class="block  text-sm font-medium mb-2" for="genre"> Genre

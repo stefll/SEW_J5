@@ -18,6 +18,8 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 
 import AutoComplete from 'primevue/autocomplete';
+import Paginator from 'primevue/paginator';
+
 
 
 
@@ -31,5 +33,6 @@ app.component('Toast', Toast)
 app.component('TabView', TabView)
 app.component('TabPanel', TabPanel)
 app.component('AutoComplete', AutoComplete)
+app.component('Paginator', Paginator)
 
 app.mount('#app')
