@@ -1,6 +1,7 @@
 package at.stefi.yousong.backend.services;
 
 import at.stefi.yousong.backend.models.Artist;
+import at.stefi.yousong.backend.models.Song;
 import at.stefi.yousong.backend.repositories.ArtistRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,5 +34,15 @@ public class ArtistService {
 
     public void deleteArtistById(long id) {
         artistRepository.deleteById(id);
+    }
+
+    public void checkForArtist(Song song) {
+        Artist existingartist = artistRepository.findArtistByArtistName(song.getArtist().getArtistName());
+        if (existingartist != null) {
+            song.setArtist(existingartist);
+        }
+        else {
+            song.setArtist(artistRepository.save(song.getArtist()));
+        }
     }
 }

@@ -32,7 +32,6 @@ class LoadDatabase {
             repository.save(new Song("Uptown Funk", new Artist("Mark Ronson"), "Funk", 4.30));
             repository.save(new Song("Rolling in the Deep", new Artist("Adele"), "Pop", 3.48));
             repository.save(new Song("Hey Jude", new Artist("The Beatles"), "Rock", 7.08));
-            repository.save(new Song("Billie Jean", new Artist("Michael Jackson"), "Pop", 4.54));
             repository.save(new Song("Back in Black", new Artist("AC/DC"), "Rock", 4.15));
             repository.save(new Song("Thriller", new Artist("Michael Jackson"), "Pop", 5.57));
             repository.save(new Song("Sweet Child O' Mine", new Artist("Guns N' Roses"), "Rock", 5.56));

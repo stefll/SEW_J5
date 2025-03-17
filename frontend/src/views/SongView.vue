@@ -11,22 +11,16 @@ const id = ref(Number(route.params.id))
 
 const songname = ref();
 const artist = ref();
+const artistId = ref();
 const artists = ref([]);
 const genre = ref();
 const length = ref();
 const toast = useToast()
 
 const search = (event) => {
-  //const artists = []
   axios.get(`http://localhost:8080/api/artists/search?query=${event.query}`).then(function (response) {
-    artists.value = response.data.map((artist) => artist.artistName);
-
-    /*response.data.forEach((artist) => {
-      artists.push(artist.artistName)
-    })*/
+    artists.value = response.data.map((artist) => artist.artistName)
   })
-  //artists.value = artists.map((artist) => artist.artistName);
-
 }
 
 if (id.value) {
@@ -36,7 +30,6 @@ if (id.value) {
     genre.value = response.data.genre;
     length.value = response.data.length
   })
-
 }
 
 async function save() {
@@ -74,7 +67,7 @@ async function save() {
           <div class="flex-grow border-t border-green-600"></div>
         </div>
         <div class="mb-4">
-          <label class="block  text-sm font-medium mb-2" for="songname">
+          <label class="block text-sm font-medium mb-2" for="songname">
             Title
           </label>
           <input v-model="songname"

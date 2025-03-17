@@ -10,6 +10,7 @@ public class Song {
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "artist_id")
     private Artist artist;
+
     private String genre;
     private double length;
 

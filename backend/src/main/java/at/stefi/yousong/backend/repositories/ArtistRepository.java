@@ -13,6 +13,8 @@ public interface ArtistRepository extends JpaRepository<Artist, Long>{
     Page<Artist> findAll(Pageable pageable);
 
     List<Artist> findByArtistNameIgnoreCaseContaining(String query);
+
+    Artist findArtistByArtistName(String artistName);
 }
 
 
